@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=$POSTGRES_DB
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+    ports:
+      - "$POSTGRES_HOST_PORT:$POSTGRES_CONTAINER_PORT"
+  api-postgres:
+    image: apiportflux:$VERSION
+    container_name: apiportflux-postgres-$ENV
+    build:
+      args:
+        version: $VERSION
+      context: .
+      dockerfile: build/docker/Dockerfile
+    environment:
+      - env=$ENV
+      - p=$CONTAINER_PORT
+      - db=postgres
+      - dsn=$POSTGRES_DSN
+    depends_on:
+      - postgres
+    ports:
+      - $HOST_PORT_POSTGRESAPI:$CONTAINER_PORT
