@@ -1,4 +1,5 @@
 # api.portflux.com
+![Coverage](https://img.shields.io/badge/Coverage-88.3%25-brightgreen)
 api.portflux.com: A Go service for stock tracking using PostgreSQL and Hexagonal Architecture.
 
 ## Table of Contents
