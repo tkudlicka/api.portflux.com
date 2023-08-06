@@ -151,3 +151,18 @@ CREATE TABLE public.dividend (
     PRIMARY KEY(dividendid),
     FOREIGN KEY(stockid) REFERENCES public.stock(stockid)
 );
+
+CREATE TABLE public.exchange_rate (
+    exchange_rate_id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,    -- unique identifier for this record
+    currency_id uuid REFERENCES public.currency(currencyid),          -- currency being converted from USD
+    rate float NOT NULL,                                              -- exchange rate between USD and the currency
+    rate_date date NOT NULL,                                          -- date this exchange rate is for
+    created_at timestamp,                                             -- when the record was created
+    updated_at timestamp                                              -- when the record was last updated
+);
+
+COMMENT ON COLUMN public.exchange_rate.currency_id IS 'Currency being converted from USD';
+COMMENT ON COLUMN public.exchange_rate.rate IS 'Exchange rate between USD and the currency';
+COMMENT ON COLUMN public.exchange_rate.rate_date IS 'Date this exchange rate is for';
+COMMENT ON COLUMN public.exchange_rate.created_at IS 'When the record was created';
+COMMENT ON COLUMN public.exchange_rate.updated_at IS 'When the record was last updated';
